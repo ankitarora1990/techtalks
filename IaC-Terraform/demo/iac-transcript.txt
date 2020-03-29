@@ -1,0 +1,104 @@
+24th Mar, 2020
+
+Greetings everyone !!
+For those who don't know me, myself Ankit Arora. I completed 4 years with myProjects them this March. I have worked on various modules and teams namely(Team Core, EPS, Yellow, Blue and now part of Team Orion) 
+So lets begin our session.
+	In recent years, Trends like cloud computing revolutionized—and improved—the way organizations design and develop their applications.
+	One critical component in that trend is “infrastructure as code”, and that is what we are gonna talk about today.
+Starting with the agenda. 
+
+#Since we have 50 of us in this teams session, In the interest of time we can keep all questions to the end.
+
+1--------------------------------------------------
+We will briefly be going through the overview of Infrastructure as Code and then focus our today's session on concepts of Terraform.
+	
+2-------------------------------------------------------
+There’s no doubt that cloud computing has had a major impact on how companies build their products. 
+	We in Apollo are also aiming for Cloud Superiority.
+While it’s easy to spin up simple cloud resources with few button clicks, BUT mistakes can easily be made in provisioning complex architectures. 
+We all know how complex Apollo's ecosystem is with number of components involved and 1000's of moving parts. And with addition of new MS this complexity will only increase.
+	Human error will always be present if we provision manually. (discrepancies aren’t going to be unavoidable)
+The only way to avoid these kinds of errors is keeping things source controlled and automation, and this is where Infrastructure as Code comes into picture.
+
+	-----------
+	With the “what” out of the way, let’s focus on the “why”. Why is it needed? What problem does it solve?
+		Lower Cost: spend less time performing manual work (onDemand Provision/deprovision)
+	Who doesn't like to save TIME and MONEY.
+
+	-----------
+	Google search trend for IaC over few years. Gain in popoularity in the age of cloud and microservices
+
+	-----------
+	And finally How?
+	Configuration management tools like Chef, Puppet, Ansible, SaltStack, etc, are designed to install and manage software on existing servers
+
+3-------------------------------------------------------
+Declarative programming: a style of programming where we describing what the program must accomplish The HOW is left to the interpreter.
+Consider this similar to HTML where we specify div, sections, links etc. But rendering logic is left to the browser.
+	Along with this all the benefits of IaC also apply.
+
+4-------------------------------------------------------
+Keeping things very simple this is how it looks like.
+We write the IaC code (which we'll see in next slide).
+	Init: Ensure connection to cloud provider is working and all dependencies are installed.
+	Plan: Gives the exact information about what is the DELTA and what resources will be added/deleted is we went ahend with the plan
+	Apply: As the name suggests. apply changes
+	optionally Destroy:
+5-------------------------------------------------------
+	Pre-requisites: 
+		Credentials for your cloud provider (ServicePrincipal for AZURE and User accessKey and secret for AWS)
+		Terraform is installed on machine or server
+		
+		Lets deep dive into constructs of this file. (Provider, Backend, Resource) 
+		And this is what is an example of Declarative programming
+		
+		while init: I am inside the directory which has my terraform file.
+		Pause at 1:05
+		Goto 	 2:00
+		Goto 	 2:45
+		Goto 	 4:35
+		
+	AWS: Pause 	 1:00
+		Goto 	 3:35
+6-------------------------------------------------------
+	Terralith: Molithhic configuration
+		With single State and definition file it is difficult to manage to multiple environments seperatly(dev, test)
+		Things can get messed up unknowingly.
+	
+	In next few slides we will go through a terraform journey for better understanding of Infrastructure. 
+		
+7-------------------------------------------------------
+	Lets work on some concepts that will make things more manageble
+	Introducing variables:
+	Separate ENV folders to make sure we have seperate tfstate file to manage diff env
+	Something better : Multi Terralith (But the problem now is duplication)
+	
+	Terramod: Introducing modules to prevent code duplication.
+	
+	Terraservices: Per component state file and remote backends
+		Logical component. Isolates and reduces risk. Distributed state.
+		Easy to adapt and extend to additional components without impacting existing ecosystem.
+	
+8-------------------------------------------------------
+	The Terrors of terraaform
+		State: has to be in sync with infra all the time. Can go corrupt, 
+			has to be stored at a secure location
+		Hard to start with the existing stack: Although TF provides import functionality. IT is time-consuming and difficult to automate/script
+		Some things can't be done without downtime: or example, you can’t change instance type, subnet, or encryption settings (just to name a few)
+		Automate everything is the goal, but for now in IaC world there are still few things we will have to rely on Humans
+		
+		That said IaC is still a wonderful concept and Terraform is the most popular and reliable tool for it today. And it helps us acieve almost complete automation.
+9-------------------------------------------------------
+RECAP
+Principle 1: Easy Reproducibility of the Systems: IaC should allow you to painlessly recreate any given chunk of an infrastructure. IaC instills confidence when it comes to provisioning new services and environments.
+
+Principle 2: High Level of Flexibility: IaC should present itself as flexible blocks that can be assembled instantly if and when the requirements arise.
+
+Principle 3: Dynamic Design: While it’s always a good bet that some component or another will need a change in the form of an upgrade. We can’t predict how, over time, the requirement of a system can change. That’s why one of the core principles of IaC is that the design is always changing.
+ 
+10-------------------------------------------------------
+On closing note just want to say that:
+No one solution fits all. Idea was to highlight key pointers that empowers you to take better decisions for IaC.
+We have to find the right tactical strategy to fit the concepts of IaC into the ecosystem. 
+
+

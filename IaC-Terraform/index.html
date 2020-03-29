@@ -1,0 +1,268 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>IaC using Terraform</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<link rel="stylesheet" href="lib/css/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+				<h2>Infrastructure as Code</h2>
+					<p>
+						<div>using</div>
+						<img data-src="img/tflogo.png">
+					</p>				
+				</section>
+				<section>
+					<h2>Agenda</h2>
+					<ul>
+						<li class="fragment">IaC overview</li>
+						<li class="fragment">Terraform concepts</li>
+						<li class="fragment">Provisioning demo on Azure and AWS</li>
+						<li class="fragment">Case studies</li>
+						<li class="fragment">Best practices</li>
+					</ul>
+				</section>
+				<section>
+					<section>
+						<h2>What is IaC?</h2>
+						<p>
+							<big class="fragment" data-fragment-index="1">
+								<q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
+								Infrastructure as Code (IaC) is a method to provision and manage IT infrastructure <big class="fragment highlight-blue" data-fragment-index="4">using source code</big>, rather than through standard operating procedures and manual processes.
+								</q>							
+							</big>
+							<img class="fragment" data-fragment-index="2" data-src="img/WhatIsIaC.png" height="238" style="float: right;">
+						</p>
+						<p>
+							<big class="fragment" data-fragment-index="3">
+								<q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
+									Gives the ability to <big class="fragment highlight-blue" data-fragment-index="4">automate</big> provisioning process to give quick and consistent results.
+								</q>
+							</big>
+						</p>
+					</section>
+					<section>
+						<h2>Why IaC?</h2>
+						<ul>
+							<li class="fragment">Lower costs</li>
+							<li class="fragment">Increase productivity</li>
+							<li class="fragment">Process in simple, repeatable and consistent</li>
+							<li class="fragment">Code is now the single source of truth</li>
+							<li class="fragment">Little to NO documentation</li>
+							<li class="fragment">Taking the CICD journey to next level</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Why IaC?</h2>
+						<img data-src="img/IaC_trend.png">
+					</section>
+					<section>
+						<h2>How?</h2>
+						<ul>
+							<li>ARM Templates</li>
+							<li>AWS CloudFormation</li>							
+							<li>Google Cloud Deployment Manager</li>
+							<li>Alibaba Cloud Resource Orchestration Service(ROS)</li>
+							<li>Ansible playbooks</li>
+							<li>Chef, Puppet, Saltstack etc.</li>
+							<li class="fragment highlight-blue">Terraform</li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>What is Terraform?</h2>
+						<ul>
+							<li class="fragment">Terraform is the first multi-cloud infrastructure tool that was introduced to the world by HashiCorp.
+							<li class="fragment">Opensource, released five years ago and written in Go.</li>
+							<li class="fragment">Hashicorp Coorporation Language(HCL)</li>
+							<li class="fragment">Declarative programming</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Why Terraform?</h2>
+						<ul>
+							<li class="fragment">Platform Agnostic</li>
+							<li class="fragment">Readability: Json like, but human friendly</li>
+							<li class="fragment">Modularity</li>
+							<li class="fragment">Validation</li>
+							<li class="fragment">Enables implementation of all kinds of coding principles like having your code in source control, create reusable modules and the ability to write automated tests. </li>
+							<li class="fragment">Massive open source community</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Why Terraform?</h2>
+						<img data-src="img/Terraform_trend.png">
+					</section>					
+				</section>
+				<section>
+					<section>
+						<h2>Terraform workflow</h2>
+						<ul>
+							<img data-src="img/tfworkflow_2.png">
+						</ul>
+					</section>						
+				</section>
+				<section>
+					<section>Scenario: Provision a website and storage account.</section>
+					<section>
+						Demo for Azure
+						<pre>
+							<code class="javascript" data-trim contenteditable style="font-size: 18px;">
+# Configure the Microsoft Azure Provider.
+provider "azurerm" {
+  version = "~>1.44.0"
+  
+  client_id = "xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+  client_secret = "xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+}
+
+# Configure a backend to maintain state.
+terraform {
+  backend "local" {
+    path = "relative/path/to/terraform.tfstate"
+  }
+}
+
+# Create a resource group.
+resource "azurerm_resource_group" "arg" {
+  name     = "rg-demo-learning"
+  location = "eastus"
+}
+
+# Create App Service plan
+resource "azurerm_app_service_plan" "asp" {
+  name                = "asp-demo-learning"
+  location            = azurerm_resource_group.arg.location
+  resource_group_name = azurerm_resource_group.arg.name
+
+  sku {
+    tier = "Free"
+    size = "F1"
+  }
+}
+
+# Create WebApp
+resource "azurerm_app_service" "as" {
+  name                = "app-service-demo-learning"
+  location            = azurerm_resource_group.arg.location
+  resource_group_name = azurerm_resource_group.arg.name
+  app_service_plan_id = azurerm_app_service_plan.asp.id
+}
+
+# Create storage
+resource "azurerm_storage_account" "asa" {
+  name                     = "asa-demo-learning"
+  resource_group_name      = azurerm_resource_group.arg.name
+  location                 = azurerm_resource_group.arg.location
+  account_tier             = "Standard"
+  account_replication_type = "GRS"
+}							</code>
+						</pre>
+					</section>
+					<section>Demo for AWS</section>
+					<section>Why should we not do this?
+						<ul>
+							<li class="fragment"><img data-src="img/terralith_1.png"></li>
+							<li class="fragment"><img data-src="img/terralith_2.png"></li>
+							<li class="fragment"><img data-src="img/terralith_3.png"></li>
+							<li class="fragment"><big class="fragment highlight-red">Terralith</big>: Never take a POC setup and evolve it into production without splitting things up.</li>
+						</ul>		
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>To make things better</h2>	
+							<ul>
+								<li class="fragment" data-fragment-index="1">Introducing variable files</li>
+								<li class="fragment" data-fragment-index="2">Environment specific folders</li>								
+							</ul>
+							<img class="fragment" data-fragment-index="3" data-src="img/tfmultiterralith.png" style="float: right;" height="500px">
+					</section>	
+					<section>
+						<h2>Files for Multi-Terralith</h2>	
+						<img data-src="img/tfmultiterralith_files.png" height="580px">
+					</section>
+					<section>
+						<h2>To make things better(Cont.)</h2>	
+						<ul>
+							<li>Introducing variable files</li>
+							<li>Environment specific folders</li>		
+							<li class="fragment highlight-red" data-fragment-index="3">Introducing modules</li>
+						</ul>
+						<img class="fragment" data-fragment-index="4" data-src="img/tfmod.png" style="float: right;" height="580px">		
+						<big class="fragment" data-fragment-index="5">Something even better (TerraMod)</big>	
+					</section>
+					<section>
+						<h2>Taking game to next level</h2>
+						<ul>
+							<li>Introducing variable files</li>
+							<li>Environment specific folders</li>
+							<li>Introducinig modules</li>
+							<li class="fragment highlight-red" data-fragment-index="3">Per component state file</li>
+							<li class="fragment highlight-red" data-fragment-index="3">Remote state</li>
+						</ul>
+						<img class="fragment" data-fragment-index="4" data-src="img/tfservices.png" style="float: right;" height="550px">
+						<big class="fragment" data-fragment-index="5">TerraServices</big>
+					</section>
+					<section>
+						<h2>Files for TerraServices</h2>	
+						<img data-src="img/tfterraservices_files.png" height="580px">
+					</section>
+				</section>
+				<section>
+						<h1>The Terrors</h1>
+						<li class="fragment">The evil state</li>
+						<li class="fragment">Hard to start with the existing stack</li>
+						<li class="fragment">Some things can't be done without downtime</li>
+				</section>
+				<section>
+						<h1>What next?</h1>
+						<ul>
+							<li>Linting</li>
+							<li>Unit Testing using Terratest</li>
+							<li>Availability testing</li>
+							<li>Approval workflow</li>
+							<li>Envision IaC in one-click CICD pipeline</li>							
+						</ul>
+				</section>
+				<section>
+					<section>
+						<img data-src="img/thanks_i.png">
+						<big class="fragment" data-fragment-index="2">Thank you</big>
+						<p class="fragment" data-fragment-index="2">Ankit Arora</p>
+					</section>
+				</section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+				transition: 'convex',
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/highlight/highlight.js' },
+					{ src: 'plugin/search/search.js', async: true },
+					{ src: 'plugin/zoom-js/zoom.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>
