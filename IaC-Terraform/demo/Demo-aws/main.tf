@@ -1,8 +1,8 @@
 # Configure the AWS Provider.
 provider "aws" {
   region = "us-east-2"
-  access_key = "AKIA4NK63CVB5JOZ3BOB"
-  secret_key = "hb+9YT/uUYSNVVcDZCsoa2wYfgsqM9GGgnf25img"
+  access_key = "<Your key here>"
+  secret_key = "<Your secret here>"
 }
 
 # Create WebApp
