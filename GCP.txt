@@ -1,0 +1,84 @@
+Coursera: ankit.arora@nagarro.com/Delhi$123
+
+1. Google Cloud Platform Fundamentals: Core Infrastructure
+
+Google Cloud: The Cloud is a great home for your applications and your data because using it frees you from a lot of overhead chores. And the Google Cloud gives you reasonably priced access to the same 
+GCP offers four main kinds of services: compute, storage, big data and machine learning
+---------------
+GCP: Zones --> Regions --> Multi-Regions.
+Virtualized data centers brought you Infrastructure as a Service, IaaS, and Platform as a Service, PaaS offerings. IaaS offerings provide raw compute, storage, and network organized in ways that are familiar from data centers. PaaS offerings, on the other hand, bind application code you write to libraries that give access to the infrastructure your application needs. That way, you can just focus on your application logic. In the IaaS model, you pay for what you allocate. In the PaaS model, you pay for what you use. Both sure beat the old way where you bought everything in advance based on lots of risky forecasting. As Cloud Computing has evolved, the momentum has shifted towards managed infrastructure and managed services. you might be asking yourself what about SaaS? Of course, Google's popular applications like, Search, Gmail, Docs and Drive are Software as a Service applications in that they're consumed directly over the internet by end users
+------------
+The Google Cloud Platform resource hierarchy --> The more generous policy is the one that takes effect. 
+ Services and APIs are enabled on a per- Project basis
+ All Google Cloud Platform resources are associated with a project.
+----------------
+IAM lets administrators authorize who can take action on specific resources. An IAM policy has a "who" part, a "can do what" part, and an "on which resource" part. 
+Three part of IAM roles: Premitive, Predefined and Custom.
+
+-------------------------------
+VPC : Virtual private network in gCloud. Subnets can span over zones (not regions)
+Networks are global; subnets are regional
+Compute Engine --> IaaS --> e.g.: VM, Servers, FileSytems, Networking. 
+App Engine --> PaaS
+
+------------------------------------
+Introduction to Google Cloud Platform Storage Options
+Cloud Storage --> Blob
+Google Big Table, Cloud Data Store --> NoSQL 
+Cloud SQL, Cloud Spanner --> RDBMS 
+------------------------------------
+
+Containers and Kubernetes --> Sits b/w IaaS and PaaS 
+Containers 	--> Invisible box around your code with dependencies including hardware.
+Kubernetes 	--> The host can scale up or down and start and stop the containers on-demand as demand for your application changes, or as hosts fail. A tool that helps you do this well is Kubernetes. Kubernetes makes it easy to orchestrate many containers on many hosts, scale them as microservices, and deploy rollouts and rollbacks.
+Docker 		--> an open source tool , that defines a format for bundling your application, its dependencies, and machine-specific settings into a container. You could use a different tool like Google Container Builder. 
+Kubernetes Engine --> or GKE. GKE is hosted Kubernetes by Google. 
+Pod 		--> is the smallest unit in Kubernetes that you create or deploy. A Pod represents a running process on your cluster as either a component of your application, or an entire app. Generally, you only have one container per pod
+Kubernetes cluster	--> A group of machines where Kubernetes can schedule workloads
+---
+Run containerized applications, orchestrate and scale them on a cluster, and deploy them using rollouts.
+ Kubernetes cluster nodes are Compute Engine virtual machines
+ 
+------------------------------------ 
+Introduction to App Engine : Paas : Standard or Flexible
+Google Cloud Endpoints : Proxy or wrapper over API's: support developers who are building services in GCP through API logging and monitoring
+and Apigee Edge: For business: Analytics, monetization based on usage, billing and dev portal  business analytics and billing on a customer-facing API.
+ gradually decompose a pre-existing monolithic application, not implemented in GCP, into microservices
+---------------------------
+Development in the cloud: 
+	- Cloud Source Repos
+	- Cloud Functions
+Infrastructure as code
+	- Deployment Manager : Infrastructure Management Service that automates the creation and management of your Google Cloud Platform resources for you. To use it, you create a template file using either the YAML markup language or Python that describes what you want the components of your environment to look like. Then, you give the template to Deployment Manager, which figures out and does the actions needed to create the environment your template describes
+Proactive instrumentation: Stackdriver is GCP's tool for monitoring, logging and diagnostics
+--------------------------
+Big Data and Machine Learning : Download these classes.
+
+--------------------------------------------------------------------------------------------------------
+2. Essential Cloud Infrastructure: Foundation
+
+2.1 Google Cloud platform Infrastructure
+	The GCP interface consists of two parts: the GCP Console and Cloud Shell.
+
+	The Console: 
+	Cloud Console which is a web-based, graphical user interface that you access through console.cloud.google.com.
+	Provides a fast way to get things done
+	Presents options to you, instead of requiring you to know them
+	Performs behind-the-scenes validation before submitting the commands
+	
+	Cloud Shell provides:
+	Detailed control
+	Complete range of options and features
+	A path to automation through scripting---	
+	Cloud shell provides the following:
+	Temporary Compute Engine VM
+	Command-line access to the instance via a browser
+	5 GB of persistent disk storage ($HOME dir)
+	Pre-installed Cloud SDK and other tools
+	gcloud: for working with Google Compute Engine and many GCP services
+	gsutil: for working with Cloud Storage
+	kubectl: for working with Google Container Engine and Kubernetes
+	bq: for working with BigQuery
+	Language support for Java, Go, Python, Node.js, PHP, and Ruby
+	Web preview functionality
+	Built-in authorization for access to resources and instances
